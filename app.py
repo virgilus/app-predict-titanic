@@ -13,7 +13,7 @@ MODEL = joblib.load('model.joblib')
 app = FastAPI()
 
 # Request Example
-#?pclass=3&age=17&sibsp=1&parch=2&fare=45.2&embarked=S&sex=male
+#http://127.0.0.1:8000/predict/?pclass=3&age=17&sibsp=1&parch=2&fare=45.2&embarked=S&sex=male
 
 @app.get("/predict/")
 async def make_prediction(pclass: int,
@@ -55,7 +55,7 @@ async def make_prediction(pclass: int,
             response["survived"] = str(MODEL.predict(new_obs_df)[0])
             response["probabilities"] = str(MODEL.predict_proba(new_obs_df))
             response["status"] = "success"
-            response["observation"] = new_obs
+            #response["observation"] = new_obs # display the input as given to the model
             
         except:
             response["status"] = "failure"
